@@ -8,28 +8,29 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
-        <StackPanel x:Name="MainPanel">
-        </StackPanel>
-        <StackPanel Grid.Row="1" Orientation="Horizontal">
-            <StackPanel.Resources>
-                <Style TargetType="Button">
-                    <Setter Property="Margin" Value="10,10,10,10"/>
-                </Style>
-            </StackPanel.Resources>
-            <Button  VerticalAlignment="Center" Content="Capture" Click="Button_ClickAsync"/>
-            <TextBlock Text="Rotate:" VerticalAlignment="Center" />
-            <ComboBox VerticalAlignment="Center" Width="100" SelectedIndex="0" SelectionChanged="RotateDropdown_SelectionChanged">
-                <ComboBoxItem Content="0"/>
-                <ComboBoxItem Content="90"/>
-                <ComboBoxItem Content="180"/>
-                <ComboBoxItem Content="270"/>
-            </ComboBox>
-
-        </StackPanel>
-    </Grid>
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="*" />
+      <RowDefinition Height="Auto" />
+    </Grid.RowDefinitions>
+    <StackPanel x:Name="MainPanel">
+    </StackPanel>
+    <StackPanel Grid.Row="1" Orientation="Horizontal">
+      <StackPanel.Resources>
+        <Style TargetType="Button">
+          <Setter Property="Margin" Value="10,10,10,10"/>
+        </Style>
+      </StackPanel.Resources>
+      <Button  VerticalAlignment="Center" Content="Capture" Click="Button_ClickAsync"/>
+      <TextBlock Text="Rotate:" VerticalAlignment="Center" />
+      <ComboBox VerticalAlignment="Center" Width="100" SelectedIndex="0" SelectionChanged="RotateDropdown_SelectionChanged">
+        <ComboBoxItem Content="0"/>
+        <ComboBoxItem Content="90"/>
+        <ComboBoxItem Content="180"/>
+        <ComboBoxItem Content="270"/>
+      </ComboBox>
+      <CheckBox Content="Flip X" Margin="10" Checked="FlipX_Clicked" Unchecked="FlipX_Clicked"/>
+      <CheckBox Content="Flip Y" Margin="10" Checked="FlipY_Clicked" Unchecked="FlipY_Clicked"/>
+    </StackPanel>
+  </Grid>
 </Page>

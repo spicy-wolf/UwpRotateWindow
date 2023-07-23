@@ -32,6 +32,8 @@ namespace RotateWindow
     {
         // Configs
         private int rotate = 0;
+        private bool flipX = false;
+        private bool flipY = false;
         private Matrix3x2 frameTransformMatrix = Matrix3x2.Identity;
 
         // Capture API objects.
@@ -106,7 +108,7 @@ namespace RotateWindow
 
             _item = item;
             _lastSize = _item.Size;
-            UpdateFrameMatrix(new Size(_lastSize.Width, _lastSize.Height), rotate);
+            UpdateFrameMatrix(new Size(_lastSize.Width, _lastSize.Height), rotate, flipX, flipY);
 
             _framePool = Direct3D11CaptureFramePool.Create(
                _canvasDevice, // D3D device
@@ -163,7 +165,7 @@ namespace RotateWindow
             {
                 needsReset = true;
                 _lastSize = frame.ContentSize;
-                UpdateFrameMatrix(new Size(_lastSize.Width, _lastSize.Height), rotate);
+                UpdateFrameMatrix(new Size(_lastSize.Width, _lastSize.Height), rotate, flipX, flipY);
             }
 
             try
@@ -245,25 +247,52 @@ namespace RotateWindow
             this.rotate = Int32.Parse((e.AddedItems[0] as ComboBoxItem).Content as string);
 
             // recompute draw matrix
-            UpdateFrameMatrix(new Size(_lastSize.Width, _lastSize.Height), rotate);
+            UpdateFrameMatrix(new Size(_lastSize.Width, _lastSize.Height), rotate, flipX, flipY);
         }
 
-        private void UpdateFrameMatrix(Size captureSize, double rotateDegree)
+        private void FlipX_Clicked(object sender, RoutedEventArgs e)
+        {
+            flipX = (sender as CheckBox).IsChecked.GetValueOrDefault(false);
+            // recompute draw matrix
+            UpdateFrameMatrix(new Size(_lastSize.Width, _lastSize.Height), rotate, flipX, flipY);
+        }
+        private void FlipY_Clicked(object sender, RoutedEventArgs e)
+        {
+            flipY = (sender as CheckBox).IsChecked.GetValueOrDefault(false);
+            // recompute draw matrix
+            UpdateFrameMatrix(new Size(_lastSize.Width, _lastSize.Height), rotate, flipX, flipY);
+        }
+
+        private void UpdateFrameMatrix(Size captureSize, double rotateDegree, bool flipX, bool flipY)
         {
             // Set up a transformation matrix to rotate around the center of the canvas by 90 degrees
-
+            frameTransformMatrix = Matrix3x2.Identity;
             // move center point to 0,0
-            var m1 = Matrix3x2.CreateTranslation((float)-captureSize.Width / 2, (float)-captureSize.Height / 2);
+            var moveToCenter = Matrix3x2.CreateTranslation((float)-captureSize.Width / 2, (float)-captureSize.Height / 2);
+            frameTransformMatrix *= moveToCenter;
             // rotate
             var angleInRadians = (float)(rotateDegree * Math.PI / 180);
-            var m2 = Matrix3x2.CreateRotation(angleInRadians);
+            var rotateMatrix = Matrix3x2.CreateRotation(angleInRadians);
+            frameTransformMatrix *= rotateMatrix;
+
+            // check flip
+            if (flipX)
+            {
+                var flipXMatrix = Matrix3x2.CreateScale(-1, 1);
+                frameTransformMatrix *= flipXMatrix;
+            }
+            if (flipY)
+            {
+                var flipXMatrix = Matrix3x2.CreateScale(1, -1);
+                frameTransformMatrix *= flipXMatrix;
+            }
+
             // move center point back
-            var m3 = Matrix3x2.CreateTranslation(
-                (float)(Math.Abs((Math.Sin(angleInRadians) * captureSize.Height) + (Math.Cos(angleInRadians) * captureSize.Width)) / 2), 
+            var moveBack = Matrix3x2.CreateTranslation(
+                (float)(Math.Abs((Math.Sin(angleInRadians) * captureSize.Height) + (Math.Cos(angleInRadians) * captureSize.Width)) / 2),
                 (float)(Math.Abs((Math.Cos(angleInRadians) * captureSize.Height) + (Math.Sin(angleInRadians) * captureSize.Width)) / 2)
             );
-
-            this.frameTransformMatrix = m1 * m2 * m3;
+            frameTransformMatrix *= moveBack;
         }
     }
 }
