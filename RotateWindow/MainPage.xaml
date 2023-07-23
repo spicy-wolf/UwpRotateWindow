@@ -1,0 +1,35 @@
+﻿<Page
+    x:Class="RotateWindow.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:RotateWindow"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <StackPanel x:Name="MainPanel">
+        </StackPanel>
+        <StackPanel Grid.Row="1" Orientation="Horizontal">
+            <StackPanel.Resources>
+                <Style TargetType="Button">
+                    <Setter Property="Margin" Value="10,10,10,10"/>
+                </Style>
+            </StackPanel.Resources>
+            <Button  VerticalAlignment="Center" Content="Capture" Click="Button_ClickAsync"/>
+            <TextBlock Text="Rotate:" VerticalAlignment="Center" />
+            <ComboBox VerticalAlignment="Center" Width="100" SelectedIndex="0" SelectionChanged="RotateDropdown_SelectionChanged">
+                <ComboBoxItem Content="0"/>
+                <ComboBoxItem Content="90"/>
+                <ComboBoxItem Content="180"/>
+                <ComboBoxItem Content="270"/>
+            </ComboBox>
+
+        </StackPanel>
+    </Grid>
+</Page>
