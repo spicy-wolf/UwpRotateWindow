@@ -5,6 +5,8 @@
 
 Rotate a selected window by 90/180/270 degree. This application can also flip align X or Y axis.
 
+![sample](https://github.com/spicy-wolf/UwpRotateWindow/assets/89831155/5638b3fc-3f79-4b6d-9ce6-97a07fe96ecc)
+
 
 ## System Requirements
 
