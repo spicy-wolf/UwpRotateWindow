@@ -20,6 +20,8 @@ Windows 11
 
 ## 如何安装
 
+首先，打开开发者模式 -- 请看 https://learn.microsoft.com/zh-cn/windows/apps/get-started/developer-mode-features-and-debugging
+
 打开发布页 -- https://github.com/spicy-wolf/UwpRotateWindow/releases
 
 下载最新的zip压缩包

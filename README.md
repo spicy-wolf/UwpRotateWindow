@@ -20,6 +20,8 @@ Windows 11
 
 ## How to install
 
+First of all, please turn on developer mode -- see https://learn.microsoft.com/en-us/windows/apps/get-started/developer-mode-features-and-debugging
+
 Navigate to the release page -- https://github.com/spicy-wolf/UwpRotateWindow/releases
 
 Download the latest zip file
